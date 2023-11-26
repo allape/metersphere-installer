@@ -115,16 +115,18 @@ docker image tag bitnami/kafka:3.5.1 ${IMAGE_PREFIX}/kafka:3.5.1
 docker pull bitnami/prometheus:2.42.0
 docker image tag bitnami/prometheus:2.42.0 ${IMAGE_PREFIX}/prometheus:v2.42.0
 
-# Install golang
-wget wget https://go.dev/dl/go1.21.4.linux-amd64.tar.gz
-sudo rm -rf /usr/local/go && tar -C /usr/local -xzf go1.21.4.linux-amd64.tar.gz
-export PATH=$PATH:/usr/local/go/bin
-# Build minio from source
-git clone --depth 1 -b RELEASE.2023-04-13T03-08-07Z https://github.com/minio/minio.git minio-RELEASE.2023-04-13T03-08-07Z
-cd minio-RELEASE.2023-04-13T03-08-07Z
-/usr/local/go/bin/go build
-docker build -t ${IMAGE_PREFIX}/minio:RELEASE.2023-04-13T03-08-07Z -f ./Dockerfile .
-cd ..
+# # Install golang
+# wget wget https://go.dev/dl/go1.21.4.linux-amd64.tar.gz
+# sudo rm -rf /usr/local/go && tar -C /usr/local -xzf go1.21.4.linux-amd64.tar.gz
+# export PATH=$PATH:/usr/local/go/bin
+# # Build minio from source
+# git clone --depth 1 -b RELEASE.2023-04-13T03-08-07Z https://github.com/minio/minio.git minio-RELEASE.2023-04-13T03-08-07Z
+# cd minio-RELEASE.2023-04-13T03-08-07Z
+# /usr/local/go/bin/go build
+# docker build -t ${IMAGE_PREFIX}/minio:RELEASE.2023-04-13T03-08-07Z -f ./Dockerfile .
+# cd ..
+
+docker pull docker pull registry.cn-qingdao.aliyuncs.com/metersphere/minio:RELEASE.2023-04-13T03-08-07Z
 
 # Not working, minio will NOT start up
 # docker pull bitnami/minio:2023.4.20 # This is the nearest version from bitnami
