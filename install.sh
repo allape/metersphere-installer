@@ -78,29 +78,29 @@ ln -s /usr/local/bin/msctl /usr/bin/msctl 2>/dev/null
 log "======================= 开始安装 ======================="
 #Install docker & docker-compose
 ##Install Latest Stable Docker Release
-if which docker >/dev/null; then
-   log "检测到 Docker 已安装，跳过安装步骤"
-   log "启动 Docker "
-   service docker start 2>&1 | tee -a ${__current_dir}/install.log
-else
-   if [[ -d docker ]]; then
-      log "... 离线安装 docker"
-      chmod +x docker/bin/*
-      cp docker/bin/* /usr/bin/
-      cp docker/service/docker.service /etc/systemd/system/
-      chmod 754 /etc/systemd/system/docker.service
-      log "... 启动 docker"
-      service docker start 2>&1 | tee -a ${__current_dir}/install.log
+# if which docker >/dev/null; then
+#    log "检测到 Docker 已安装，跳过安装步骤"
+#    log "启动 Docker "
+#    service docker start 2>&1 | tee -a ${__current_dir}/install.log
+# else
+#    if [[ -d docker ]]; then
+#       log "... 离线安装 docker"
+#       chmod +x docker/bin/*
+#       cp docker/bin/* /usr/bin/
+#       cp docker/service/docker.service /etc/systemd/system/
+#       chmod 754 /etc/systemd/system/docker.service
+#       log "... 启动 docker"
+#       service docker start 2>&1 | tee -a ${__current_dir}/install.log
 
-   else
-      log "... 在线安装 docker"
-      curl -fsSL https://resource.fit2cloud.com/get-docker-linux.sh -o get-docker.sh 2>&1 | tee -a ${__current_dir}/install.log
-      sudo sh get-docker.sh 2>&1 | tee -a ${__current_dir}/install.log
-      log "... 启动 docker"
-      service docker start 2>&1 | tee -a ${__current_dir}/install.log
-   fi
+#    else
+#       log "... 在线安装 docker"
+#       curl -fsSL https://resource.fit2cloud.com/get-docker-linux.sh -o get-docker.sh 2>&1 | tee -a ${__current_dir}/install.log
+#       sudo sh get-docker.sh 2>&1 | tee -a ${__current_dir}/install.log
+#       log "... 启动 docker"
+#       service docker start 2>&1 | tee -a ${__current_dir}/install.log
+#    fi
 
-fi
+# fi
 
 # 检查docker服务是否正常运行
 docker ps 1>/dev/null 2>/dev/null
@@ -110,25 +110,25 @@ if [ $? != 0 ];then
 fi
 
 # 配置docker服务开机自启
-if which systemctl >/dev/null; then
-  systemctl enable docker
-fi
+# if which systemctl >/dev/null; then
+#   systemctl enable docker
+# fi
 
 ##Install Latest Stable Docker Compose Release
-if which docker-compose >/dev/null; then
-   log "检测到 Docker Compose 已安装，跳过安装步骤"
-else
-   if [[ -d docker ]]; then
-      log "... 离线安装 docker-compose"
-      cp docker/bin/docker-compose /usr/bin/
-      chmod +x /usr/bin/docker-compose
-   else
-      log "... 在线安装 docker-compose"
-      curl -L https://resource.fit2cloud.com/docker/compose/releases/download/v2.16.0/docker-compose-$(uname -s | tr A-Z a-z)-`uname -m` -o /usr/local/bin/docker-compose 2>&1 | tee -a ${__current_dir}/install.log
-      chmod +x /usr/local/bin/docker-compose
-      ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
-   fi
-fi
+# if which docker-compose >/dev/null; then
+#    log "检测到 Docker Compose 已安装，跳过安装步骤"
+# else
+#    if [[ -d docker ]]; then
+#       log "... 离线安装 docker-compose"
+#       cp docker/bin/docker-compose /usr/bin/
+#       chmod +x /usr/bin/docker-compose
+#    else
+#       log "... 在线安装 docker-compose"
+#       curl -L https://resource.fit2cloud.com/docker/compose/releases/download/v2.16.0/docker-compose-$(uname -s | tr A-Z a-z)-`uname -m` -o /usr/local/bin/docker-compose 2>&1 | tee -a ${__current_dir}/install.log
+#       chmod +x /usr/local/bin/docker-compose
+#       ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+#    fi
+# fi
 # 检查docker-compose是否正常
 docker-compose version 1>/dev/null 2>/dev/null
 if [ $? != 0 ];then
@@ -167,18 +167,18 @@ set -e
 export COMPOSE_HTTP_TIMEOUT=180
 cd ${__current_dir}
 # 加载镜像
-if [[ -d images ]]; then
-   log "加载镜像"
-   for i in $(ls images); do
-      docker load -i images/$i
-   done
-else
-   log "拉取镜像"
-   msctl pull
-   docker pull ${MS_JMETER_IMAGE}
-   curl -sfL https://resource.fit2cloud.com/installation-log.sh | sh -s ms ${INSTALL_TYPE} ${MS_IMAGE_TAG}
-   cd -
-fi
+# if [[ -d images ]]; then
+#    log "加载镜像"
+#    for i in $(ls images); do
+#       docker load -i images/$i
+#    done
+# else
+#    log "拉取镜像"
+#    msctl pull
+#    docker pull ${MS_JMETER_IMAGE}
+#    curl -sfL https://resource.fit2cloud.com/installation-log.sh | sh -s ms ${INSTALL_TYPE} ${MS_IMAGE_TAG}
+#    cd -
+# fi
 
 log "启动服务"
 msctl down -v
