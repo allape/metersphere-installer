@@ -106,8 +106,8 @@ docker image tag metersphere/data-streaming:latest ${IMAGE_PREFIX}/data-streamin
 docker pull redis:6.2.6
 docker image tag redis:6.2.6 ${IMAGE_PREFIX}/redis:6.2.6
 
-docker pull mysql:8.0.34
-docker image tag mysql:8.0.34 ${IMAGE_PREFIX}/mysql:8.0.34
+docker pull mysql:8.0.35
+docker image tag mysql:8.0.35 ${IMAGE_PREFIX}/mysql:8.0.35
 
 docker pull bitnami/kafka:3.5.1
 docker image tag bitnami/kafka:3.5.1 ${IMAGE_PREFIX}/kafka:3.5.1
@@ -126,7 +126,7 @@ docker image tag bitnami/prometheus:2.42.0 ${IMAGE_PREFIX}/prometheus:v2.42.0
 # docker build -t ${IMAGE_PREFIX}/minio:RELEASE.2023-04-13T03-08-07Z -f ./Dockerfile .
 # cd ..
 
-docker pull docker pull registry.cn-qingdao.aliyuncs.com/metersphere/minio:RELEASE.2023-04-13T03-08-07Z
+docker pull registry.cn-qingdao.aliyuncs.com/metersphere/minio:RELEASE.2023-04-13T03-08-07Z
 
 # Not working, minio will NOT start up
 # docker pull bitnami/minio:2023.4.20 # This is the nearest version from bitnami
